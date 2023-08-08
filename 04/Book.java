@@ -1,31 +1,33 @@
 public class Book {
-
-    private String title;
-    private int publicationYear;
+    private String author;
+    private String name;
     private int pages;
 
-    public Book(String title, int publicationYear, int pages) {
-        this.title = title;
-        this.publicationYear = publicationYear;
+    public Book(String author, String name, int pages) {
+        this.author = author;
+        this.name = name;
         this.pages = pages;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAuthor() {
+        return this.author;
     }
 
-    public int getPublicationYear() {
-        return publicationYear;
+    public String getName() {
+        return this.name;
     }
 
     public int getPages() {
-        return pages;
+        return this.pages;
     }
 
-    @Override
     public String toString() {
-
-        return this.title + ", " + this.pages + " pages, " + this.publicationYear;
+        return this.author + ", " + this.name + ", " + this.pages + " pages";
     }
 
+    public static void main(String[] args) {
+        Book book = new Book("J. K. Rowling", "Harry Potter and the Sorcerer's Stone", 223);
+
+        System.out.println(book);
+    }
 }
