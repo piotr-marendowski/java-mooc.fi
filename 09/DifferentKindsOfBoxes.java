@@ -57,40 +57,83 @@ class Item {
 /* part 2 */
 class BoxWithMaxWeight extends Box {
     private int capacity;
+    private int boxWeight;
     private ArrayList<Item> items;
 
     public BoxWithMaxWeight(int capacity) {
         this.capacity = capacity;
+        this.boxWeight = 0;
         this.items = new ArrayList<>();
     }
 
     @Override
     public void add(Item item) {
-        if ((item.getWeight() + this.capacity) <= this.capacity) {
+        if ((item.getWeight() + this.boxWeight) <= this.capacity) {
             this.items.add(item);
+            this.boxWeight += item.getWeight();
         }
     }
 
     @Override
     public boolean isInBox(Item item) {
         for (Item i: items) {
-			if (i.equals(item)) {
+			if (i.equals(item))
 				return true;
-			}
 		}
+
+		return false;
+    }
+}
+
+/* part 3 */
+class OneItemBox extends Box {
+    private boolean hasItem;
+    private Item item;
+
+    public OneItemBox() {
+        this.hasItem = false;
+        this.item = (Item) item;
+    }
+
+    @Override
+    public void add(Item item) {
+        if (!this.hasItem) {
+            this.item = item;
+            this.hasItem = true;
+        }
+    }
+
+    @Override
+    public boolean isInBox(Item item) {
+        return this.item.getName().equals(item.getName());
+    }
+}
+
+class MisplacingBox extends Box {
+    private ArrayList<Item> items;
+
+    public MisplacingBox() {
+        this.items = new ArrayList<>();
+    }
+
+    @Override
+    public void add(Item item) {
+        this.items.add(item);
+    }
+
+    @Override
+    public boolean isInBox(Item item) {
 		return false;
     }
 }
 
 public class DifferentKindsOfBoxes {
     public static void main(String[] args) {
-        BoxWithMaxWeight coffeeBox = new BoxWithMaxWeight(10);
-        coffeeBox.add(new Item("Saludo", 5));
-        coffeeBox.add(new Item("Pirkka", 5));
-        coffeeBox.add(new Item("Kopi Luwak", 5));
+        MisplacingBox box = new MisplacingBox();
+        box.add(new Item("Saludo", 5));
+        box.add(new Item("Pirkka", 5));
 
-        System.out.println(coffeeBox.isInBox(new Item("Saludo")));
-        System.out.println(coffeeBox.isInBox(new Item("Pirkka")));
-        System.out.println(coffeeBox.isInBox(new Item("Kopi Luwak")));
+        System.out.println(box.isInBox(new Item("Saludo")));
+        System.out.println(box.isInBox(new Item("Pirkka")));
     }
 }
