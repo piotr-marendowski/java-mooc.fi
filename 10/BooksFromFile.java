@@ -25,10 +25,6 @@ class Book {
     public int getPages() {
         return this.pages;
     }
-
-    public String toString() {
-        return this.name;
-    }
 }
 
 public class BooksFromFile {
@@ -44,7 +40,7 @@ public class BooksFromFile {
                 .map(row -> row.split(","))
                 .filter(parts -> parts.length >= 4)
                 .map(parts -> new Book(parts[3], parts[0], Integer.valueOf(parts[2])))
-                .forEach(book -> lines.add(book));
+                .forEach(books -> lines.add(books));
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
