@@ -1,4 +1,4 @@
-package FirstPackages.mooc.ui;
+package mooc.ui;
 
 public class TextInterface implements UserInterface {
     @Override

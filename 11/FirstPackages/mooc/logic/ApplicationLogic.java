@@ -1,5 +1,5 @@
-package FirstPackages.mooc.logic;
-import FirstPackages.mooc.ui.UserInterface;
+package mooc.logic;
+import mooc.ui.UserInterface;
 
 public class ApplicationLogic {
     private UserInterface ui;
