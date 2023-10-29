@@ -44,7 +44,6 @@ public class FinnishParties extends Application {
                         continue;
                     else
                         parties[party].getData().add(new XYChart.Data(year, Double.valueOf(parts[i])));
-                    // i think that wrong formatting is at fault here, combined with an error in here
                 }
 
                 party++;
