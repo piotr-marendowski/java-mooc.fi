@@ -18,11 +18,12 @@ public class SavingsCalculator extends Application {
         BorderPane layout = new BorderPane();
 
         NumberAxis xAxis = new NumberAxis(0, 30, 1);
-        NumberAxis yAxis = new NumberAxis(0, 20000, 2500);
+        NumberAxis yAxis = new NumberAxis();    // auto scale
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Savings");
-        XYChart.Series data = new XYChart.Series();
+        XYChart.Series savingsGraph = new XYChart.Series();
+        XYChart.Series interestGraph = new XYChart.Series();
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(20, 20, 20, 20));
@@ -65,18 +66,32 @@ public class SavingsCalculator extends Application {
             String val = String.format("%.1f", newValue);
             monthlyLabel.setText(val.toString());
 
-            data.getData().clear();
-            data.getData().add(new XYChart.Data(0, 0));
+            savingsGraph.getData().clear();
+            savingsGraph.getData().add(new XYChart.Data(0, 0));
             double savs = 0.0;
 
-            for (int i = 0; i < 30; i++, savs += (monthlySlider.getValue() * 12))
-                data.getData().add(new XYChart.Data(i, savs));
+            for (int i = 0; i <= 30; i++, savs += (monthlySlider.getValue() * 12))
+                savingsGraph.getData().add(new XYChart.Data(i, savs));
 
-            lineChart.getData().add(data);
+            lineChart.getData().add(savingsGraph);
         });
         yearlySlider.valueProperty().addListener((change, oldValue, newValue) -> {
             String val = String.format("%.1f", newValue);
             yearlyLabel.setText(val.toString());
+
+            interestGraph.getData().clear();
+            interestGraph.getData().add(new XYChart.Data(0, 0));
+            double monthlyInterest = monthlySlider.getValue();
+            double yearlyInterest = yearlySlider.getValue();
+            double savs = 0.0;
+
+            for (int i = 0; i <= 30; i++) {
+                interestGraph.getData().add(new XYChart.Data(i, savs));
+                savs += ((monthlyInterest * 12));
+                savs += (savs * (yearlyInterest / 100));
+            }
+
+            lineChart.getData().add(interestGraph);
         });
 
         Scene view = new Scene(layout);
